@@ -17,10 +17,11 @@
 
 #include "ForceBeWithYou.h"
 #include "Game_Audio.h"
+#include "NeverGonnaGiveYouUp.h"
 
 Game_Audio_Class GameAudio(25,0); 
 
-Game_Audio_Wav_Class pmWav(SoundData);                            
+Game_Audio_Wav_Class pmWav(NeverGonnaGiveYouUp_wav);                            
                                       
 
 void setup() {
