@@ -3,11 +3,11 @@
 //
 // ESP32 run this webserver example
 // PC run ngrok 
-// ngrok tcp 192.168.0.107:80 --authtoken 28kIFXzf3DV1m0sbTneNhuaM135_6wSzqrbEFZ9ZZaWQu2mvK
+// ngrok tcp 192.168.168.25:80 --authtoken 28kTBnGwdaeYEjbPvz8HiixtXcO_55yGVE4Jhdy459nEK1dE5
 #include <WiFi.h>
 
-const char* ssid = "3F";  
-const char* password = "0931039217";
+const char* ssid = "HITRON-BD50";  
+const char* password = "tinghome";
 
 WiFiServer server(80);
 String header;
@@ -57,7 +57,7 @@ void loop(){
             client.println("<center>\n");
             client.println("<h1 style=\"color:blue;\">ESP32 webserver</h1>\n");
             client.println("<h2 style=\"color:green;\">Hello World Web Sever</h2>\n");
-            client.println("<h2 style=\"color:blue;\">by 00953128 2022/5/5</h2>\n");
+            client.println("<h2 style=\"color:blue;\">by 00953150 2022/5/9</h2>\n");
             client.println("</center>\n");
             client.println("</body>\n");
             client.println("</html>");
