@@ -23,8 +23,8 @@
 #include "DHT.h"
 /************************* WiFi Access Point *********************************/
 
-#define WLAN_SSID "WLAN_SSID"
-#define WLAN_PASS "WIFI_PASSWORD"
+#define WLAN_SSID "HITRON-BD50"
+#define WLAN_PASS "tinghome"
 
 /************************* Adafruit.io Setup *********************************/
 
@@ -35,8 +35,8 @@
 
 // Adafruit IO Account Configuration
 // (to obtain these values, visit https://io.adafruit.com and click on Active Key)
-#define AIO_USERNAME "YOUR_ADAFRUIT_IO_USERNAME"
-#define AIO_KEY      "YOUR_ADAFRUIT_IO_KEY"
+#define AIO_USERNAME "TWlurk"
+#define AIO_KEY      "aio_vUGZ48YSdsShGo0KrpRrMQMLIOCW"
 
 /************ Global State (you don't need to change this!) ******************/
 

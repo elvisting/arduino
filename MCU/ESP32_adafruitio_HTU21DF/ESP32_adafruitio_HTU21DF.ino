@@ -38,7 +38,7 @@
 // Adafruit IO Account Configuration
 // (to obtain these values, visit https://io.adafruit.com and click on Active Key)
 #define AIO_USERNAME "TWlurk"
-#define AIO_KEY      "aio_IPtU23KBwDWHUnU9uV56fAF6AiFF"
+#define AIO_KEY      "aio_vUGZ48YSdsShGo0KrpRrMQMLIOCW"
 
 /************ Global State (you don't need to change this!) ******************/
 
@@ -77,8 +77,9 @@ const char* adafruitio_root_ca = \
 
 // Setup a feed called 'test' for publishing.
 // Notice MQTT paths for AIO follow the form: <username>/feeds/<feedname>
+Adafruit_MQTT_Publish humidity = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/humidity");
+Adafruit_MQTT_Publish temp = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/temperature");
 Adafruit_MQTT_Publish test = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/test");
-
 /*************************** Sketch Code ************************************/
 Adafruit_HTU21DF htu = Adafruit_HTU21DF();
 void setup() {
@@ -127,6 +128,7 @@ void loop() {
   MQTT_connect();
 
   // Now we can publish stuff!
+  /*
   Serial.print(F("\nSending val "));
   Serial.print(x);
   Serial.print(F(" to test feed..."));
@@ -135,15 +137,25 @@ void loop() {
   } else {
     Serial.println(F("OK!"));
   }
-    
-    float temp = htu.readTemperature();
-    float rel_hum = htu.readHumidity();
-    Serial.print("Temp: "); Serial.print(temp); Serial.print(" C");
-    Serial.print("\t\t");
-    Serial.print("Humidity: "); Serial.print(rel_hum); Serial.println(" \%");
-    
+  */  
+  float t = htu.readTemperature();
+  float h = htu.readHumidity();
+
+  Serial.print(F("\nSending humidity ")); Serial.print(t); Serial.print(F(" C\n"));
+  if (! temp.publish(t)) {
+    Serial.println(F("Failed"));
+  } else {
+    Serial.println(F("OK!"));
+  }
+  delay(2000);
+  Serial.print(F("\nSending temperature ")); Serial.print(h); Serial.println(F(" \%"));
+  if (! humidity.publish(h)) {
+    Serial.println(F("Failed"));
+  } else {
+    Serial.println(F("OK!"));
+  }
   // wait a couple seconds to avoid rate limit
-  delay(5000);
+  delay(2000);
 
 }
 
