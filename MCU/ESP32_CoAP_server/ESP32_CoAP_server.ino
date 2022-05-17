@@ -10,7 +10,7 @@
 #define ledPin 2
 
 const char* ssid     = "HITRON-BD50";
-const char* password = "tinghome";
+const char* password = "####";
 
 // CoAP client response callback
 void callback_response(CoapPacket &packet, IPAddress ip, int port);

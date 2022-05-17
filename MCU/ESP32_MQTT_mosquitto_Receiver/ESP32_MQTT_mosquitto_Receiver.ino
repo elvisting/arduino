@@ -17,7 +17,7 @@
 
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
 const char ssid[] = "HITRON-BD50";        // your network SSID (name)
-const char pass[] = "tinghome";    // your network password (use for WPA, or use as key for WEP)
+const char pass[] = "####";    // your network password (use for WPA, or use as key for WEP)
 
 // To connect with SSL/TLS:
 // 1) Change WiFiClient to WiFiSSLClient.
@@ -30,7 +30,7 @@ MqttClient mqttClient(wifiClient);
 
 const char broker[] = "test.mosquitto.org";
 int        port     = 1883;
-const char topic[]  = "NTOUEE/00953101";
+const char topic[]  = "NTOUEE/00953150";
 
 void setup() {
   //Initialize serial and wait for port to open:

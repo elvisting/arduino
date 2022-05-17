@@ -26,7 +26,7 @@
 /************************* WiFi Access Point *********************************/
 
 #define WLAN_SSID "HITRON-BD50"
-#define WLAN_PASS "tinghome"
+#define WLAN_PASS "####"
 
 /************************* Adafruit.io Setup *********************************/
 

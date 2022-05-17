@@ -24,7 +24,7 @@
 /************************* WiFi Access Point *********************************/
 
 #define WLAN_SSID "HITRON-BD50"
-#define WLAN_PASS "tinghome"
+#define WLAN_PASS "####"
 
 /************************* Adafruit.io Setup *********************************/
 
@@ -110,7 +110,6 @@ void setup() {
   client.setCACert(adafruitio_root_ca);
 
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
-  Serial.begin(115200);
   dht.begin();
   delay(10);
 

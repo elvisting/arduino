@@ -7,7 +7,7 @@
 #include <WiFi.h>
 
 const char* ssid = "HITRON-BD50";  
-const char* password = "tinghome";
+const char* password = "#####";
 
 WiFiServer server(80);
 String header;
