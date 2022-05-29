@@ -81,7 +81,7 @@ void setup() {
 datatypes::Vector2D _direction = {0, 0};
 float turn = 0; //> indicates the direction of rotation
 float height = 0; //> indicates the leg extension
-//有五種模式(0）停滯（1）小跑（2）轉向（3）翻滾（4）物體檢測
+//有五種模式(0）停滯（1）小跑（2）轉向(左右)（3）翻滾(前後-左右)（4）物體檢測
 int state = 0; //> indicates the type of gait, (0) idle, (1) trot, (2) yaw, (3) pitch-roll, (4) object-detection
 float _period = 10.0; //> indicates the number of steps every second
 
