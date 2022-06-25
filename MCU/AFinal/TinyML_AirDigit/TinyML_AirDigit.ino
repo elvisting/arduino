@@ -1,15 +1,17 @@
 #include <EloquentTinyML.h>
 #include <eloquent_tinyml/tensorflow.h>
 #include "tinyml_airdigit.h"
-#include "x_test.h"
 
 #define N_INPUTS  90
 #define N_OUTPUTS 3
 // preallocate a certain amount of memory for input, output, and intermediate arrays.
 #define TENSOR_ARENA_SIZE 16*1024 
 
+
   
 Eloquent::TinyML::TensorFlow::TensorFlow<N_INPUTS, N_OUTPUTS, TENSOR_ARENA_SIZE> tf;
+
+float x
     
 void setup() {  
     Serial.begin(115200);

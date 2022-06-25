@@ -9,12 +9,16 @@ MPU6050 imu;
 float ax, ay, az;
 int16_t accX, accY, accZ;
 
+float sumaZ=0;
 float sumX=0;
 float sumY=0;
 float sumZ=0;
 float offsetX=0;
 float offsetY=0;
 float offsetZ=0;
+
+float t;
+float R;
 
 #define sampleTime 50 // 50ms = 20Hz
 #define periodTime 1500 // 1500ms
@@ -29,6 +33,7 @@ enum Ascale {
   AFS_8G,
   AFS_16G
 };
+
 
 int Ascale = AFS_2G;
 float aRes; // scale resolutions per LSB for the sensors
@@ -59,7 +64,7 @@ void getAcc() {
     getAres();        
     ax = (float)accX * aRes -offsetX;  // get actual g value, this depends on scale being set
     ay = (float)accY * aRes -offsetY;   
-    az = (float)accZ * aRes -offsetZ;   
+    az = (float)accZ * aRes -offsetZ;
 }
 
 void setup() {
@@ -91,30 +96,49 @@ void setup() {
 
   // pick up IMU to start sampling  
   while(!sampleEn) {
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(200);   
+    digitalWrite(LED_BUILTIN, HIGH);   
     getAcc();
     if (abs(az)>0.1) sampleEn=true;
     digitalWrite(LED_BUILTIN, LOW);
-    delay(200);      
   }
-  
-  lastTime = millis();
 }
 
 void loop() {
-    loopTime = millis() - lastTime;
-    if (loopTime >= sampleTime) {
-      getAcc();
-      lastTime = millis();  
-      Serial.print(ax); Serial.print(','); 
-      Serial.print(ay); Serial.print(',');
-      Serial.print(az); Serial.println();
-      counts++;
-    }
-    if (counts>=samples) {
-      counts=0;
-      Serial.println(); Serial.println(); Serial.println();
-    }
+  getAcc();
+  while(abs(az)>0.075){
+    getAcc();
+        Serial.print(ax); Serial.print(','); 
+        Serial.print(ay); Serial.print(',');
+        Serial.print(az); Serial.println();
+        if(counts <= 5){
+        sumaZ += az;
+        counts++;
+        }
+      delay(50);
+   }
+  if(abs(az)<0.05){
+    
+    getAcc(); 
+    t += millis() - R;
+    R = millis(); 
+     if(t>2000){
+        if(sumaZ > 0){
+        sumaZ = 0;
+        counts = 0;
+        Serial.print("OPENED");
+
+        }
+      else if(sumaZ < 0){
+        sumaZ = 0;
+        counts = 0;
+        Serial.print("CLOSED");
+        }
+      Serial.println();
+      t=0;
+      } 
 }
- 
+  else 
+    t = 0;
+
+}
+

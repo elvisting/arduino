@@ -21,20 +21,22 @@
 #include <TridentTD_EasyFreeRTOS32.h>
 
 // ประกาศ ตัวแปร task และ function สำหรับ task
-TridentOS   HTU_task, Blink_task, WiFi_task, AsyncWebServer_task;
-void HTU_func(void*), Blink_func(void*), WiFi_func(void*), AsyncWebServer_func(void*);
+TridentOS   HTU_task, Windows_status, WiFi_task, AsyncWebServer_task, Blink_task;
+void HTU_func(void*), Windows_status_func(void*), WiFi_func(void*), AsyncWebServer_func(void*), Blink_func(void*);
 
 //----พื้นที่ส่วนนี้สำหรับประกาศตัวแปรที่ใช้แชร์ข้อมูลกันระหว่าง task ------
 int     xBlink_Delay;    // กำหนดความเร็วของไฟกระพริบ       (มาตรฐานให้ใช้ x นำ)
 float   xHTU_temp;       // อุณหภูมิ จาก DHT ค่าล่าสุดที่อ่านได้  (มาตรฐานให้ใช้ x นำ)
 float   xHTU_humid;      // ความชื้น จาก DHT ค่าล่าสุดที่อ่านได้  (มาตรฐานให้ใช้ x นำ)
+int     window_status;
 //---------------------------------------------------------
 
 void setup(){  // setup() หลักตัวพิมพ์เล็ก
   Serial.begin(115200); Serial.println();
     
   HTU_task.start( HTU_func );
-  WiFi_task.start( WiFi_func );  
+  WiFi_task.start( WiFi_func ); 
+  Windows_status.start(Windows_status_func );
 }
 
 void loop(){}  // loop() หลักตัวพิมพ์เล็ก ไม่จำเป็นต้องใช้แต่ให้มีไว้เสมอ

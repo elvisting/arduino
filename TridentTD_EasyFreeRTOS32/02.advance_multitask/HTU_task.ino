@@ -18,7 +18,7 @@
 
 
 #include <Wire.h>
-#include "Adafruit_HTU21DF.h"
+#include <Adafruit_HTU21DF.h>
 
 Adafruit_HTU21DF htu = Adafruit_HTU21DF();
 

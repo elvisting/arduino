@@ -29,9 +29,17 @@ void AsycWebServer_func(void*) {
     });
     
     server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
-      char buf[50];
-      sprintf(buf, "<H2>Temp  : %.2f<br>\nHumid : %.2f<br></H2>\n", xHTU_temp, xHTU_humid);      
-      request->send(200, "text/html", String(buf));
+      char buf[200];
+      char buf2[200];
+      sprintf(buf, "<H2 style=\"color:blue;\">Temp : %.2f<br>\nHumid : %.2f<br>\n </H2>\n", xHTU_temp, xHTU_humid);
+      
+      if(window_status == 1){
+      sprintf(buf2,"<H3 style=\"color:red;\">Windows status : OPEN</H3>\n"); 
+      }        
+      else
+      sprintf(buf2,"<H3 style=\"color:green;\">Windows status : CLOSE</H3>\n");
+      request->send(200, "text/html", String(buf) + String(buf2));
+
     });
     
     server.onNotFound([](AsyncWebServerRequest * request) {

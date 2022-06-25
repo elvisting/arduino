@@ -32,7 +32,7 @@ void setup() {
 }
 
 void loop(){
-  WiFiClient client = server.available();   // Listen for incoming clients
+     WiFiClient client = server.available();   // Listen for incoming clients
   
     if (client) {                             // If a new client connects,
     Serial.println("New Client.");          // print a message out in the serial port
@@ -55,9 +55,10 @@ void loop(){
             client.println("<html>\n");
             client.println("<body>\n");
             client.println("<center>\n");
-            client.println("<h1 style=\"color:blue;\">ESP32 webserver</h1>\n");
-            client.println("<h2 style=\"color:green;\">Hello World Web Sever</h2>\n");
-            client.println("<h2 style=\"color:blue;\">by 00953150 2022/5/9</h2>\n");
+            client.println("<h1 style=\"color:black;\">ESP32 webserver</h1>\n");
+            client.println("<h2 style=\"color:Teal;\">Humidity:%.2f</h2>\n", xHTU_humid);
+            client.println("<h3 style=\"color:Fuchsia;\">Temperature:%.2f</h3>\n", xHTU_temp);
+            client.println("<h4 style=\"color:red;\">Window state:</h4>\n");
             client.println("</center>\n");
             client.println("</body>\n");
             client.println("</html>");
