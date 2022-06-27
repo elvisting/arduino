@@ -69,7 +69,7 @@ void getAcc() {
     }
 
    
-void Windows_status_func(void*){
+void Windows_Status_func(void*){
     VOID SETUP() {
     Serial.begin(115200);
     Wire.begin(); // default I2C clock is 100KHz

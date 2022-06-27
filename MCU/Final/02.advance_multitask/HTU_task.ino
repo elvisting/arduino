@@ -19,9 +19,12 @@
 
 #include <Wire.h>
 #include <Adafruit_HTU21DF.h>
+#include "I2Cdev.h" 
+#include "Wire.h"
+#include <MPU6050.h>
 
 Adafruit_HTU21DF htu = Adafruit_HTU21DF();
-
+extern MPU6050 imu;
 
 // Task Share Variables Info
 // xDHT_temp   : ข้อมูล อุณหภูมิ ล่าสุด สำหรับ task อื่นนำไปใช้ได้ 
@@ -29,27 +32,37 @@ Adafruit_HTU21DF htu = Adafruit_HTU21DF();
 
 void HTU_func(void*) {
   //----พื้นที่สำหรับประกาศตัวแปรที่ใช้ภายใน task นี้เท่านั้น----
-  
+  float tempset = 25;
+  float humidset = 60;
   //-----------------------------------------------
- VOID SETUP() {
-  Serial.begin(115200);
-  Serial.println("HTU21DF Humidity & Temperature sensor");
+  VOID SETUP() {
+    Serial.begin(115200);
+    Wire.begin(); // default I2C clock is 100KHz
 
-  if (!htu.begin()) {
-    Serial.println("Couldn't find HTU21DFsensor!");
-    while (1);
+    Serial.println("HTU21DF Humidity & Temperature sensor");
+    while(!htu.begin()){ 
+      Serial.println("Couldn't find HTU21DFsensor!");
+      DELAY(400);
+    }
+
+    Serial.println("find HTU21DFsensor!");
   }
-}
 
   VOID LOOP() {                       // VOID LOOP() ใน task ใช้พิมพ์ใหญ่
     float t = NAN; float h = NAN;  
+
     while( isnan(t) || isnan(h) ) {
       t = htu.readTemperature();
       h = htu.readHumidity();
     }
+
     xHTU_temp = t;  xHTU_humid = h;  // ค่าที่อ่านได้ถูกต้องแล้ว ค่อย copy ไปไว้ที่ ตัวแปรค่าล่าสุด
     Serial.printf("[HTU] temp : %.2f C\thumid : %.2f %%\n", xHTU_temp, xHTU_humid);
     
-    DELAY(500);              // วนรอบถัดไปที่จะอ่าน sensor อีกครั้ง
+    DELAY(1000); // วนรอบถัดไปที่จะอ่าน sensor อีกครั้ง
+    if(t > tempset && h > humidset){
+      Windows_Status.start( Windows_Status_func );
+      HTU_task.stop();
+    }
   }
 }
