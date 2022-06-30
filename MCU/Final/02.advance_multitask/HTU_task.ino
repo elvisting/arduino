@@ -19,12 +19,10 @@
 
 #include <Wire.h>
 #include <Adafruit_HTU21DF.h>
-#include "I2Cdev.h" 
-#include "Wire.h"
-#include <MPU6050.h>
+
 
 Adafruit_HTU21DF htu = Adafruit_HTU21DF();
-extern MPU6050 imu;
+
 
 // Task Share Variables Info
 // xDHT_temp   : ข้อมูล อุณหภูมิ ล่าสุด สำหรับ task อื่นนำไปใช้ได้ 
@@ -32,8 +30,8 @@ extern MPU6050 imu;
 
 void HTU_func(void*) {
   //----พื้นที่สำหรับประกาศตัวแปรที่ใช้ภายใน task นี้เท่านั้น----
-  float tempset = 25;
-  float humidset = 60;
+  float tempset = 25.01;
+  float humidset = 60.01;
   //-----------------------------------------------
   VOID SETUP() {
     Serial.begin(115200);
@@ -60,9 +58,23 @@ void HTU_func(void*) {
     Serial.printf("[HTU] temp : %.2f C\thumid : %.2f %%\n", xHTU_temp, xHTU_humid);
     
     DELAY(1000); // วนรอบถัดไปที่จะอ่าน sensor อีกครั้ง
-    if(t > tempset && h > humidset){
-      Windows_Status.start( Windows_Status_func );
-      HTU_task.stop();
+    if((t > tempset) && (h > humidset)){
+        if(xwindow_status == 0){
+          Windows_Status.start(Windows_Status_func);
+          HTU_task.stop();
+           }
+       else{
+        Serial.println();
+         }
     }
+    if((t < tempset) && (h < humidset)){
+        if(xwindow_status == 1){
+          Windows_Status.start(Windows_Status_func);
+          HTU_task.stop();
+           }
+        else{
+          Serial.println();
+         }       
+     }
   }
 }

@@ -4,8 +4,8 @@
 #include "I2Cdev.h" 
 #include "Wire.h"
 #include <MPU6050.h>
-#include <Wire.h>
-#include <Adafruit_HTU21DF.h>
+
+
 
 MPU6050 imu;
 float ax, ay, az;
@@ -73,6 +73,7 @@ void getAcc() {
    
 void Windows_Status_func(void*){
   VOID SETUP() {
+    Wire.begin();
     Serial.begin(115200);
     //Wire.begin(); // default I2C clock is 100KHz
     
@@ -91,7 +92,7 @@ void Windows_Status_func(void*){
     }
 
     // calibration
-/*    for (int i=0; i<100; i++){
+    for (int i=0; i<100; i++){
         getAcc();
         sumX += ax;
         sumY += ay;
@@ -113,7 +114,7 @@ void Windows_Status_func(void*){
         if (abs(az)>0.1) sampleEn=true;
         digitalWrite(LED_BUILTIN, LOW);
     }
-*/    
+    
   } // SETUP()
 
   VOID LOOP() {
@@ -123,7 +124,7 @@ void Windows_Status_func(void*){
       Serial.print(ax); Serial.print(','); 
       Serial.print(ay); Serial.print(',');
       Serial.print(az); Serial.println();
-      if(counts <= 5){
+      if(counts < 30){
         sumaZ += az;
         counts++;
       }
@@ -134,7 +135,7 @@ void Windows_Status_func(void*){
       getAcc(); 
       t += millis() - R;
       R = millis(); 
-      if(t>2000){
+      if(counts > 5){
         if(sumaZ > 0){
           sumaZ = 0;
           counts = 0;
@@ -151,7 +152,7 @@ void Windows_Status_func(void*){
         Serial.println();
         t=0;
 
-        HTU_task.start( HTU_func );
+        HTU_task.start(HTU_func);
         Windows_Status.stop();
       } 
     }

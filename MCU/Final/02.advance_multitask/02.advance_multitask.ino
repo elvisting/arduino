@@ -35,9 +35,8 @@ void setup(){  // setup() หลักตัวพิมพ์เล็ก
   Serial.begin(115200); Serial.println();
   
   WiFi_task.start( WiFi_func );  
-  HTU_task.start( HTU_func );
-   
-  //Windows_Status.start( Windows_Status_func );
+  DELAY(5000);
+  HTU_task.start(HTU_func);
 }
 
 void loop(){}  // loop() หลักตัวพิมพ์เล็ก ไม่จำเป็นต้องใช้แต่ให้มีไว้เสมอ

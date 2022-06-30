@@ -29,8 +29,8 @@ void AsycWebServer_func(void*) {
     });
     
     server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
-      char buf[50];
-      char buf2[50];
+      char buf[100];
+      char buf2[100];
       sprintf(buf, "<H2 style=\"color:blue;\">Temp : %.2f<br>\nHumid : %.2f<br>\n </H2>\n", xHTU_temp, xHTU_humid);
       
       if(xwindow_status == 1){
